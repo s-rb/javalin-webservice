@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<!--Подключен шаблонизатор, второй - для security, для добавления кнопки логаут-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Application</title>
+
+    <!--    Для стилей подключени Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!--Добавили нав бар из бустрапа. Кладем в div. Таймлиф позволяет работать с фрагментами-->
+<!--Этот весь блок можно использовать на любых других страницах. Чтобы подшить его туда, можно использовать имя navigation-->
+<div th:fragment="navigation(activeTab)">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item" th:classappend="${activeTab == 'Home' ? 'active' : ''}">
+<!--                    ведет на главную страницу @{/} Для подсветки активной вкладки ставится active-->
+<!--                    th:classappend="${activeTab == 'Home' ? 'active' : '' - значит что мы присоединяем к классу active если -->
+<!--                    передали в activeTab Home. если нет, то ничего не присоединяем. Актив - подсвечивает актив.вкладку-->
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeTab == 'addWords' ? 'active' : ''}">
+                    <a class="nav-link" th:href="@{/words/add}">Add words</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeTab == 'All' ? 'active' : ''}">
+                    <a class="nav-link" th:href="@{/words}">All words</a>
+                </li>
+<!--                <li class="nav-item" th:classappend="${activeTab == 'Cart' ? 'active' : ''}">-->
+<!--                    <a class="nav-link" th:href="@{/cart}">Cart</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="isAnonymous()">-->
+<!--                    <a class="nav-link btn btn-success" th:href="@{/login}">Login</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--&lt;!&ndash;                    Форма, шлет пост запрос на адрес /логаут. Показываем только тем кто зашел&ndash;&gt;-->
+<!--                    <form th:action="@{/logout}" method="POST">-->
+<!--                        <input type="submit" class="btn btn-danger" value="Logout"/>-->
+<!--                    </form>-->
+<!--                </li>-->
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+</body>
+</html>

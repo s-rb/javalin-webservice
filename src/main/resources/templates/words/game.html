@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Application</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div th:replace="~{templates/navigation.html :: navigation(All)}"/>
+    <h1>Words game</h1>
+    <span th:if="${words.size() == 0}">Words List is empty</span>
+
+    <table th:if="${words.size() > 0}" class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <td>ID</td>
+            <td>Русский</td>
+            <td>Английский</td>
+            <td>Уровень сложности</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="word : ${words}">
+
+            <td th:text="${word.id}"/>
+            <td th:text="${word.russian}"/>
+            <td th:text="${word.english}"/>
+            <td th:text="${word.difficulty}"/>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <div>
+<!--        <button type="submit" class="btn btn-primary">Добавить</button>-->
+        <a class="btn btn-primary" th:href="@{'/words/export/'}">Экспорт данных</a>
+<!--        <td><a class="btn btn-danger" th:href="@{'/products/delete/' + ${item.product.id}}">Del</a> </td>-->
+    </div>
+
+</div>
+</body>
+</html>

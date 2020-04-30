@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<!--Подключен шаблонизатор-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Application</title>
+
+<!--    Для стилей подключени Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+<!--    Добавляем навигационную панель из страницы navigation. th:replace означает замену другим дивом. Хотим заменить его-->
+<!--    Из файла navigation.html и в нем есть фрагмент с названием navigation, который ожидает аргумент какой-то и мы отдаем-->
+<!--    аргумент Home. (там ждет activeTab). Этот аргумент нужен если захотим подсвечивать активный элемент в панелт навигации-->
+        <div th:replace="~{navigation :: navigation(Add words)}"/>
+        <h1>Случайные слова</h1>
+        <!--    С помощью таймлиф можно делать условия (показывать таблицу если в ней есть элементы)-->
+        <!--    показываем только если в списке нет элементов-->
+        <span th:if="${words.size() == 0}">Words List is empty</span>
+        <!--    text - означает, что будет обрабатываться шаблонизатором Thymeleaf-->
+        <!--    <span th:text="${prod.id + ' ' + prod.title + ' ' + prod.price}" />-->
+
+        <!--    Классы берем из бутстрапа-->
+        <!--    Таймлиф позволяет запускать циклы и даже если неизвестно количество строк таблицы (кол-во передаваемых продуктов)-->
+        <!--    показываем если в списке есть больше 0 элементов th:id="${prods.size() > 0}"-->
+        <table th:if="${words.size() > 0}" class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <td>ID</td>
+                <td>Русский</td>
+                <td>Английский</td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="word : ${words}">
+                <!--            Таймлиф вызывает у объекта геттеры и сеттеры, так что .id это не обращение не напрямую к полю-->
+                <td th:text="${word.id}"/>
+                <td th:text="${word.russian}"/>
+                <td th:text="${word.english}"/>
+                <!--            Делаем колонку с деталями для каждой строки товара. @ - означает что будет строиться относительно корня приложения ../app-->
+                <!--            details - обычный текст для получения ссылки виде @ - root т.е. /app/details/{id}-->
+                <td><a class="btn btn-primary" th:href="@{'/words'}">Добавить</a></td>
+<!--                <td><a class="btn btn-danger" th:href="@{'/products/delete/' + ${item.product.id}}">Del</a> </td>-->
+            </tr>
+            </tbody>
+        </table>
+        <!--    реализуем сохранение заказов в базе-->
+<!--        <a class="btn btn-success" th:href="@{/cart/create_order}">Make Order</a>-->
+</body>
+</html>

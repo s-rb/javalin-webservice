@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Application</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+        <div th:replace="~{templates/navigation.html :: navigation(addWords)}"/>
+        <form class="add_form" action="/words" method="post" enctype="multipart/form-data">
+            <h1>Добавить слова в базу</h1>
+            <div class="form-group">
+                <label for="russian">Русское слово</label>
+                <input type="text" id="russian" name="russian" class="form-control" placeholder="Русское слово...">
+                <label for="english">Английское слово</label>
+                <input type="text" id="english" name="english" class="form-control" placeholder="Английское слово...">
+                <label for="difficulty">Уровень сложности</label>
+                <input type="text" id="difficulty" name="difficulty" class="form-control" placeholder="Уровень сложности...">
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+</div>
+        <!--    реализуем сохранение заказов в базе-->
+<!--        <a class="btn btn-success" th:href="@{/cart/create_order}">Make Order</a>-->
+</body>
+</html>
