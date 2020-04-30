@@ -4,6 +4,9 @@ import com.mongodb.client.MongoClient;
 import io.javalin.Javalin;
 import ru.list.surkovr.configs.Config;
 import ru.list.surkovr.configs.Path;
+import ru.list.surkovr.configs.databases.AbstractDatabase;
+import ru.list.surkovr.configs.databases.DatabaseFactory;
+import ru.list.surkovr.configs.databases.MongoDB;
 import ru.list.surkovr.controllers.PageControllerImpl;
 import ru.list.surkovr.controllers.WordController;
 import ru.list.surkovr.controllers.WordControllerImpl;
@@ -13,18 +16,18 @@ import ru.list.surkovr.services.FileService;
 import ru.list.surkovr.services.FileServiceImpl;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
-import static ru.list.surkovr.configs.Config.getMongoClient;
 
 public class App {
 
     private final Config config = new Config();
-    private final MongoClient mongoClient;
     private final WordController wordController;
     private final PageControllerImpl pageController;
+    private final AbstractDatabase database;
 
     public App() {
-        this.mongoClient = getMongoClient(config);
-        WordRepository wordRepository = new WordRepositoryImpl(mongoClient.getDatabase(config.getDbName()));
+        database = new DatabaseFactory().getDatabase(MongoDB.getInstance());
+        database.initDB();
+        WordRepository wordRepository = new WordRepositoryImpl(database);
         FileService fileService = new FileServiceImpl(wordRepository);
         this.wordController = new WordControllerImpl(wordRepository, fileService);
         this.pageController = new PageControllerImpl(wordRepository);
@@ -67,7 +70,7 @@ public class App {
 
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            mongoClient.close();
+            database.close();
             app.stop();
         }));
 

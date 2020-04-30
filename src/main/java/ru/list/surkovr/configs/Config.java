@@ -25,9 +25,6 @@ public class Config {
 //    private static Map<String, Set<UserRole>> userCredentials = Map.of("admin|password", Set.of(UserRole.ADMIN, UserRole.PUBLIC));
 
     private int port;
-    private int mongoPort;
-    private String mongoHost;
-    private String dbName;
     public static final String PATH_TO_DB_BACKUP_DIR = "data/backup_db";
     public static final String FILENAME_DB_BACKUP = "db_backup";
     public static final String FILE_EXT_TXT = ".txt";
@@ -40,9 +37,6 @@ public class Config {
         ProcessBuilder processBuilder = new ProcessBuilder();
         // Получаем доступ к переменным окружения, которые задали на сервере (можно менять параметры)
         port = Integer.parseInt(processBuilder.environment().getOrDefault("APP_PORT", "8080"));
-        mongoPort = Integer.parseInt(processBuilder.environment().getOrDefault("MONGO_PORT", "27017"));
-        mongoHost = processBuilder.environment().getOrDefault("MONGO_HOST", "localhost");
-        dbName = processBuilder.environment().getOrDefault("DB_NAME", "wordsdb");
     }
 
     public static void configApp(JavalinConfig config) {
@@ -67,18 +61,4 @@ public class Config {
 //
 //        return userCredentials.getOrDefault(credentials.getUsername() + "|" + credentials.getPassword(), Set.of(UserRole.PUBLIC));
 //    }
-
-    public static MongoClient getMongoClient(Config config) {
-        CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
-        CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
-//                MongoClientOptions.builder().maxConnectionIdleTime(60000).build().getCodecRegistry());
-
-        return MongoClients.create(MongoClientSettings.builder()
-                .applyToClusterSettings(builder ->
-                        builder.hosts(List.of(new ServerAddress(config.getMongoHost(), config.getMongoPort()))))
-                .codecRegistry(codecRegistry)
-                .build());
-    }
-
-
 }

@@ -6,6 +6,7 @@ import com.mongodb.client.model.FindOneAndReplaceOptions;
 import com.mongodb.client.model.ReturnDocument;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import ru.list.surkovr.configs.databases.AbstractDatabase;
 import ru.list.surkovr.model.entities.Word;
 
 import java.util.*;
@@ -14,51 +15,40 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class WordRepositoryImpl implements WordRepository {
 
-    private static final String COLLECTION_NAME = "words";
-    private static final FindOneAndReplaceOptions UPDATE_OPTIONS = new FindOneAndReplaceOptions()
-            .returnDocument(ReturnDocument.AFTER);
+    private final AbstractDatabase database;
 
-    private final MongoCollection<Word> words;
-
-    public WordRepositoryImpl(MongoDatabase database) {
-        this.words = database.getCollection(COLLECTION_NAME, Word.class);
+    public WordRepositoryImpl(AbstractDatabase database) {
+        this.database = database;
     }
 
     @Override
     public void create(Word word) {
         word.setId(new ObjectId());
-        words.insertOne(word);
+        database.insertObject(word);
     }
 
     @Override
     public Word find(String id) {
-        return words.find(eq("_id", new ObjectId(id))).first();
+        return database.find(id, Word.class);
     }
 
     @Override
     public List<Word> findAll() {
-        List<Word> result = new LinkedList<>();
-        for (Word word : words.find()) {
-            result.add(word);
-        }
-        return result;
+        return database.findAll(Word.class);
     }
 
     @Override
     public Word update(Word word, String id) {
-        return words.findOneAndReplace(new Document("_id", new ObjectId(id)), word, UPDATE_OPTIONS);
+        return database.update(word, id);
     }
 
     @Override
     public void delete(String id) {
-        words.deleteOne(new Document("_id", new ObjectId(id)));
+        database.delete(id, Word.class);
     }
 
     @Override
     public Word getRandomWord() {
-        List<Word> allWords = findAll();
-        if (allWords == null || allWords.isEmpty()) return null;
-        int random = new Random().nextInt(allWords.size());
-        return allWords.get(random);
+        return database.getRandomWord();
     }
 }
