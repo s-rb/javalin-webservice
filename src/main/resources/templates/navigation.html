@@ -33,18 +33,6 @@
                 <li class="nav-item" th:classappend="${activeTab == 'All' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{/words}">All words</a>
                 </li>
-<!--                <li class="nav-item" th:classappend="${activeTab == 'Cart' ? 'active' : ''}">-->
-<!--                    <a class="nav-link" th:href="@{/cart}">Cart</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item" sec:authorize="isAnonymous()">-->
-<!--                    <a class="nav-link btn btn-success" th:href="@{/login}">Login</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item" sec:authorize="isAuthenticated()">-->
-<!--&lt;!&ndash;                    Форма, шлет пост запрос на адрес /логаут. Показываем только тем кто зашел&ndash;&gt;-->
-<!--                    <form th:action="@{/logout}" method="POST">-->
-<!--                        <input type="submit" class="btn btn-danger" value="Logout"/>-->
-<!--                    </form>-->
-<!--                </li>-->
             </ul>
         </div>
     </nav>

@@ -33,7 +33,6 @@ public class WordControllerImpl implements WordController {
         word.setRussian(context.formParam("russian"));
         word.setDifficulty(context.formParam("difficulty") != null
                 ? Integer.parseInt(context.formParam("difficulty")) : 1);
-//                context.bodyAsClass(Word.class);
         if (word.getId() != null) {
             throw new BadRequestResponse(String.format("Unable to create a new word with existing id: %s", word));
         }

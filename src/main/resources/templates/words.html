@@ -49,11 +49,8 @@
                 <!--            Делаем колонку с деталями для каждой строки товара. @ - означает что будет строиться относительно корня приложения ../app-->
                 <!--            details - обычный текст для получения ссылки виде @ - root т.е. /app/details/{id}-->
                 <td><a class="btn btn-primary" th:href="@{'/words'}">Добавить</a></td>
-<!--                <td><a class="btn btn-danger" th:href="@{'/products/delete/' + ${item.product.id}}">Del</a> </td>-->
             </tr>
             </tbody>
         </table>
-        <!--    реализуем сохранение заказов в базе-->
-<!--        <a class="btn btn-success" th:href="@{/cart/create_order}">Make Order</a>-->
 </body>
 </html>

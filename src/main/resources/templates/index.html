@@ -46,16 +46,10 @@
                 <td th:text="${word.id}" th:if="${stat.count < 10}"/>
                 <td th:text="${word.russian}" th:if="${stat.count < 10}"/>
                 <td th:text="${word.english}" th:if="${stat.count < 10}"/>
-                <!--            Делаем колонку с деталями для каждой строки товара. @ - означает что будет строиться относительно корня приложения ../app-->
-                <!--            details - обычный текст для получения ссылки виде @ - root т.е. /app/details/{id}-->
-<!--                <td><a class="btn btn-secondary" th:href="@{'/words/'}">Добавить</a></td>-->
-<!--                <td><a class="btn btn-danger" th:href="@{'/products/delete/' + ${item.product.id}}">Del</a> </td>-->
             </tr>
             </tbody>
         </table>
 
 </div>
-        <!--    реализуем сохранение заказов в базе-->
-<!--        <a class="btn btn-success" th:href="@{/cart/create_order}">Make Order</a>-->
 </body>
 </html>

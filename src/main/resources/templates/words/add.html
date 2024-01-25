@@ -24,12 +24,10 @@
                 <label for="english">Английское слово</label>
                 <input type="text" id="english" name="english" class="form-control" placeholder="Английское слово...">
                 <label for="difficulty">Уровень сложности</label>
-                <input type="text" id="difficulty" name="difficulty" class="form-control" placeholder="Уровень сложности...">
+                <input type="number" min="1" max="10" id="difficulty" name="difficulty" class="form-control" placeholder="Уровень сложности...">
             </div>
             <button type="submit" class="btn btn-primary">Добавить</button>
         </form>
 </div>
-        <!--    реализуем сохранение заказов в базе-->
-<!--        <a class="btn btn-success" th:href="@{/cart/create_order}">Make Order</a>-->
 </body>
 </html>

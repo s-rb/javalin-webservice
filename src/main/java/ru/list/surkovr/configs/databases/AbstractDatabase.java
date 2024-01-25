@@ -4,8 +4,6 @@ import ru.list.surkovr.model.entities.Word;
 
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.eq;
-
 public abstract class AbstractDatabase {
 
     public abstract void initDB();

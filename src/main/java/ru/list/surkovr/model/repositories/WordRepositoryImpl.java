@@ -1,17 +1,10 @@
 package ru.list.surkovr.model.repositories;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.FindOneAndReplaceOptions;
-import com.mongodb.client.model.ReturnDocument;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import ru.list.surkovr.configs.databases.AbstractDatabase;
 import ru.list.surkovr.model.entities.Word;
 
-import java.util.*;
-
-import static com.mongodb.client.model.Filters.eq;
+import java.util.List;
 
 public class WordRepositoryImpl implements WordRepository {
 

@@ -1,6 +1,5 @@
 package ru.list.surkovr;
 
-import com.mongodb.client.MongoClient;
 import io.javalin.Javalin;
 import ru.list.surkovr.configs.Config;
 import ru.list.surkovr.configs.Path;
@@ -44,7 +43,6 @@ public class App {
         app.routes(() -> {
             path(Path.INDEX, () ->
                     get(Path.INDEX, pageController::serveIndexPage));
-//                            ctx -> ctx.result("Hello!")
             path(Path.WORDS, () -> {
                 get(pageController::serveAllWordsPage);
                 post(wordController::create);

@@ -1,6 +1,7 @@
 package ru.list.surkovr.configs.databases;
 
 import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -23,6 +24,13 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class MongoDB extends AbstractDatabase {
+
+    public static final String MONGO_HOST = "surkoff.com";
+    public static final String MONGO_USER = "username";
+    public static final char[] MONGO_PASSWORD = "password".toCharArray();
+    public static final String MONGO_PORT = "27017";
+    public static final String MONGO_USER_STORED_DB_NAME = "admin";
+    public static final String MONGO_DB_NAME = "wordsdb";
 
     private static volatile MongoDB instance;
     private int mongoPort;
@@ -55,15 +63,16 @@ public class MongoDB extends AbstractDatabase {
     public void initDB() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         // Получаем доступ к переменным окружения, которые задали на сервере (можно менять параметры)
-        mongoPort = Integer.parseInt(processBuilder.environment().getOrDefault("MONGO_PORT", "27017"));
-        mongoHost = processBuilder.environment().getOrDefault("MONGO_HOST", "localhost");
-        dbName = processBuilder.environment().getOrDefault("DB_NAME", "wordsdb");
+        mongoPort = Integer.parseInt(processBuilder.environment().getOrDefault("MONGO_PORT", MONGO_PORT));
+        mongoHost = processBuilder.environment().getOrDefault("MONGO_HOST", MONGO_HOST);
+        dbName = processBuilder.environment().getOrDefault("DB_NAME", MONGO_DB_NAME);
 
         CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
         CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
         mongoClient = MongoClients.create(MongoClientSettings.builder()
                 .applyToClusterSettings(builder ->
                         builder.hosts(List.of(new ServerAddress(mongoHost, mongoPort))))
+                .credential(MongoCredential.createCredential(MONGO_USER, MONGO_USER_STORED_DB_NAME, MONGO_PASSWORD))
                 .codecRegistry(codecRegistry)
                 .build());
         database = mongoClient.getDatabase(dbName);

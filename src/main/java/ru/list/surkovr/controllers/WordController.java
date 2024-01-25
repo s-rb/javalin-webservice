@@ -9,8 +9,6 @@ public interface WordController {
 
     void findOne(@NotNull Context context);
 
-//    void findAll(@NotNull Context context);
-
     void updateOne(@NotNull Context context);
 
     void deleteOne(@NotNull Context context);

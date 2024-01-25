@@ -19,7 +19,6 @@ public class PageControllerImpl implements PageController {
         this.wordRepository = wordRepository;
     }
 
-//        model.put("users", userDao.getAllUserNames());
     @Override
     public void serveIndexPage(Context context) {
         Map<String, Object> model = ViewUtil.baseModel(context);
